@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue3响应式的原理</title>
+</head>
+<body>
+<script type="text/javascript"></script>
+<script>
+    let person={
+        name:'张三',
+        age:22,
+        sex:'男'
+    }
+    const p=new Proxy/*代理*/(person,{
+        get(target,propName){//检查person属性
+            console.log(`有人读取了p身上的${propName}属性`)
+            return target[propName]
+        },
+        set(target,propName,value){//修改,增加person属性
+            console.log(`有人修改了p身上的${propName}属性,我要去更新页面了`)
+            target[propName]=value
+        },
+        deleteProperty(target, propName){//删除person属性
+            console.log(`有人删除了p身上的${propName}属性,我要去更新页面了`)
+            return delete target[propName]
+        }
+    })
+
+</script>
+</body>
+</html>
